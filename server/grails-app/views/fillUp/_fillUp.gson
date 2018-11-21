@@ -1,0 +1,7 @@
+import com.joelforjava.carburant.FillUp
+
+model {
+    FillUp fillUp
+}
+
+json g.render(fillUp, [expand: ['gasStation']])

@@ -1,0 +1,7 @@
+import com.joelforjava.carburant.GasStation
+
+model {
+    GasStation gasStation
+}
+
+json g.render(gasStation, [excludes: ['fillUps']])
