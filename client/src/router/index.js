@@ -3,10 +3,11 @@ import Router from 'vue-router'
 import Welcome from '@/components/Welcome'
 import FillUps from '@/components/FillUps'
 import NewFillUp from '@/components/NewFillUp'
+import NewGasStation from '@/components/NewGasStation'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: '/',
@@ -22,6 +23,13 @@ export default new Router({
       path: '/fills/add',
       name: 'Add Fill Up',
       component: NewFillUp
+    },
+    {
+      path: '/station/add',
+      name: 'Add Gas Station',
+      component: NewGasStation
     }
   ]
 })
+
+export default router

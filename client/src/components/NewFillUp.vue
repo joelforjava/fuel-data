@@ -8,7 +8,7 @@
         </div>
         <div class="form-group">
           <label for="gasStationName">Gas Station Name</label>
-          <input type="text" class="form-control" id="gasStationName" v-model="gasStation.name"/>
+          <autocomplete :items="stationNameOptions" v-model="gasStation.name" id="gasStationName"></autocomplete>
         </div>
         <div class="form-group">
           <label for="gasStationAddress">Address</label>
@@ -52,8 +52,10 @@
   </div>
 </template>
 <script>
+import Autocomplete from './autocomplete'
 export default {
   name: 'AddFillUp',
+  components: {Autocomplete},
   data () {
     return {
       gasStation: {
@@ -71,6 +73,7 @@ export default {
         odometer: '',
         dateOccurred: new Date()
       },
+      stationNameOptions: [],
       serverURL: process.env.SERVER_URL
     }
   },
@@ -108,9 +111,18 @@ export default {
       }).then((res) => res.json())
         .then((data) => {
           console.log(data)
+          this.$router.push('/fills')
         })
         .catch((err) => console.error(err))
     }
+  },
+  created: function () {
+    fetch(`${this.$data.serverURL}/gas-stations`)
+      .then(response => response.json())
+      .then(json => {
+        console.log(json)
+        this.stationNameOptions = json.map(x => x.name)
+      })
   }
 }
 </script>

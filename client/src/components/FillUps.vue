@@ -39,7 +39,7 @@
 </template>
 <script>
 export default {
-  name: 'Fill Ups',
+  name: 'FillUps',
   data () {
     return {
       fillUps: null,
