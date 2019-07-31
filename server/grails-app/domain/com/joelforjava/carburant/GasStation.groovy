@@ -16,10 +16,18 @@ class GasStation {
     static hasMany = [fillUps: FillUp]
 
     static constraints = {
-        name nullable: false
+        name nullable: false, column: 'station_name'
         address nullable: true
         city nullable: false
-        state nullable: false
+        state nullable: false, column: 'station_state'
         zipCode nullable: false
+    }
+
+    String toCSV() {
+        "$name,$address,$city,$state,$zipCode"
+    }
+
+    static String csvMetadata() {
+        '"STORE_NAME","STORE_ADDRESS","STORE_CITY","STORE_STATE","STORE_ZIP"'
     }
 }

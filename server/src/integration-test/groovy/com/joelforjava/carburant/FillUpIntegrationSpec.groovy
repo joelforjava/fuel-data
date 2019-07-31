@@ -1,6 +1,6 @@
 package com.joelforjava.carburant
 
-import grails.testing.gorm.DataTest
+
 import grails.testing.mixin.integration.Integration
 import grails.transaction.*
 import spock.lang.*
@@ -27,7 +27,7 @@ class FillUpIntegrationSpec extends Specification {
             pricePerUnit = ppu
             totalCost = total
             dateOccurred = dtOccurred
-            odometer = odo
+            odometerReading = odo
             gasStation = station
         }
 
