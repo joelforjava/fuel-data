@@ -5,6 +5,7 @@
   TODO - update to where it will go away when the input loses focus AT ALL
        - As of now, you have to tab out or click well below the input for it to properly go away
          if you don't select a value, hit enter, or hit tab
+  TODO - also, if you clear a form that contains this, any '<autocomplete>' items will retain their value
 -->
 <template>
     <div class="autocomplete">

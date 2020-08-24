@@ -8,6 +8,7 @@
         </div>
         <div class="form-group">
           <label for="gasStationName">Gas Station Name</label>
+          <!-- NOTE: Only the typed characters are being sent to the service! -->
           <autocomplete :items="stationNameOptions" v-model="gasStation.name" id="gasStationName"></autocomplete>
         </div>
         <div class="form-group">
@@ -44,7 +45,7 @@
         </div>
         <div class="form-group">
           <label for="odometer">Odometer</label>
-          <input type="text" class="form-control" id="odometer" v-model="fillUp.odometer"/>
+          <input type="text" class="form-control" id="odometer" v-model="fillUp.odometerReading"/>
         </div>
       </form>
       <button type="button" class="btn btn-primary btn-lg btn-block" @click="submit">Save</button>
@@ -70,7 +71,7 @@ export default {
         numGallons: '',
         pricePerUnit: '',
         totalCost: '',
-        odometer: '',
+        odometerReading: '',
         dateOccurred: new Date()
       },
       stationNameOptions: [],

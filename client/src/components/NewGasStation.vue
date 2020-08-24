@@ -17,7 +17,12 @@
         </div>
         <div class="form-group">
           <label for="gasStationState">State</label>
-          <input type="text" class="form-control" id="gasStationState" v-model="gasStation.state"/>
+          <select class="form-control" id="gasStationState" v-model="gasStation.state">
+            <option v-for="state in stateOptions"
+                    :key="state"
+                    v-bind:value="state">{{state}}</option>
+          </select>
+          <!--<input type="text" class="form-control" id="gasStationState" v-model="gasStation.state"/>-->
         </div>
         <div class="form-group">
           <label for="gasStationZip">Zip</label>
@@ -43,6 +48,7 @@ export default {
         zipCode: ''
       },
       stationNameOptions: [],
+      stateOptions: [ 'AL', 'AK', 'AR', 'FL', 'GA' ],
       serverURL: process.env.SERVER_URL
     }
   },
