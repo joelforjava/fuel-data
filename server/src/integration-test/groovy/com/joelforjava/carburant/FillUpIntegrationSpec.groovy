@@ -2,7 +2,7 @@ package com.joelforjava.carburant
 
 
 import grails.testing.mixin.integration.Integration
-import grails.transaction.*
+import grails.gorm.transactions.*
 import spock.lang.*
 
 @Integration

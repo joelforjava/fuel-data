@@ -13,18 +13,27 @@ info:
         name: '@info.app.name@'
         version: '@info.app.version@'
         grailsVersion: '@info.app.grailsVersion@'
+
 spring:
+    jmx:
+        unique-names: true
     main:
         banner-mode: "off"
     groovy:
         template:
             check-template-location: false
-
-# Spring Actuator Endpoints are Disabled by Default
-endpoints:
-    enabled: false
-    jmx:
-        enabled: true
+    devtools:
+        restart:
+            additional-exclude:
+                - '*.gsp'
+                - '**/*.gsp'
+                - '*.gson'
+                - '**/*.gson'
+                - 'logback.groovy'
+                - '*.properties'
+management:
+    endpoints:
+        enabled-by-default: false
 
 ---
 grails:
@@ -91,7 +100,12 @@ environments:
     production:
         dataSource:
             dbCreate: none
-            url: jdbc:h2:./prodDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
+            url: jdbc:mariadb://dev3-db.joelforjava.local:13307/FUEL_DATA
+            username: fueld
+            password: 'StrawbLays31415Ari!'
+            driverClassName: org.mariadb.jdbc.Driver
+            dialect: org.hibernate.dialect.MariaDB53Dialect
+            readOnly: true
             properties:
                 jmxEnabled: true
                 initialSize: 5
