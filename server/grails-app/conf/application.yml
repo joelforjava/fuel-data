@@ -101,8 +101,8 @@ environments:
         dataSource:
             dbCreate: none
             url: jdbc:mariadb://dev3-db.joelforjava.local:13307/FUEL_DATA
-            username: fueld
-            password: 'StrawbLays31415Ari!'
+            username: sa
+            password: 
             driverClassName: org.mariadb.jdbc.Driver
             dialect: org.hibernate.dialect.MariaDB53Dialect
             readOnly: true
