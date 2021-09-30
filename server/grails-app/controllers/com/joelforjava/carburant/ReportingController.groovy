@@ -4,6 +4,8 @@ class ReportingController {
 	static responseFormats = ['json', 'xml', 'csv']
 
     // TODO - move to different method
+    // TODO TODO - consider aggregated report for user vs individual vehicle.
+    //  As of now, this will list all vehicle fill ups!
     def index() {
         withFormat {
             csv {
