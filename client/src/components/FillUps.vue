@@ -30,7 +30,7 @@
           <td>{{fillUp.numGallons}}</td>
           <td>{{fillUp.pricePerUnit}}</td>
           <td>{{fillUp.totalCost}}</td>
-          <td>{{fillUp.odometer}}</td>
+          <td>{{fillUp.odometerReading}}</td>
         </tr>
         </tbody>
       </table>
