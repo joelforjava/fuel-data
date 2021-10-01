@@ -100,9 +100,9 @@ environments:
     production:
         dataSource:
             dbCreate: none
-            url: jdbc:mariadb://dev3-db.joelforjava.local:13307/FUEL_DATA
-            username: sa
-            password: 
+            url: jdbc:mariadb://dev3-db.joelforjava.local:8806/FUEL_DATA
+            username: ${FUEL_DATA_PRD_USR}
+            password: ${FUEL_DATA_PRD_PWD}
             driverClassName: org.mariadb.jdbc.Driver
             dialect: org.hibernate.dialect.MariaDB53Dialect
             readOnly: true
@@ -124,3 +124,9 @@ environments:
                 testOnReturn: false
                 jdbcInterceptors: ConnectionState
                 defaultTransactionIsolation: 2 # TRANSACTION_READ_COMMITTED
+
+grails:
+  plugin:
+      databasemigration:
+          updateOnStart: false
+          updateOnStartFileName: changelog.groovy

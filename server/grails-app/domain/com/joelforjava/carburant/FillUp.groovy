@@ -18,6 +18,8 @@ class FillUp {
 
     static hasOne = [gasStation : GasStation]
 
+    static belongsTo = [vehicle: Vehicle]
+
     static constraints = {
         octane nullable: false, blank: false
         numGallons nullable: false, min: 0.0, scale: 3
