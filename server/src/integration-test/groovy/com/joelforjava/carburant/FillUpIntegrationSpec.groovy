@@ -29,6 +29,7 @@ class FillUpIntegrationSpec extends Specification {
             dateOccurred = dtOccurred
             odometerReading = odo
             gasStation = station
+            vehicle = veh
         }
 
         when: 'We invoke validation'
@@ -41,17 +42,23 @@ class FillUpIntegrationSpec extends Specification {
 
         where:
 
-        oct  | gals   | ppu   | total  | dtOccurred         | odo     | station      || expValid | numErrors | fieldInError   | errorCode
-        '87' | 9.993  | 3.399 | 33.97  | date('09/09/2017') | 45_098  | gasStation() || true     | 0         | null           | null
-        null | 9.993  | 3.399 | 33.97  | date('09/09/2017') | 33_901  | gasStation() || false    | 1         | 'octane'       | 'nullable'
-        ''   | 10.881 | 2.799 | 30.46  | date('09/09/2017') | 101_354 | gasStation() || false    | 1         | 'octane'       | 'blank'
-        '91' | null   | 2.619 | 28.78  | date('09/09/2015') | 113_782 | gasStation() || false    | 1         | 'numGallons'   | 'nullable'
-        '91' | -1.0   | 2.619 | 28.78  | date('09/09/2015') | 113_782 | gasStation() || false    | 1         | 'numGallons'   | 'min.notmet'
-        '93' | 21.908 | null  | 107.17 | date('10/10/2018') | 4_991   | gasStation() || false    | 1         | 'pricePerUnit' | 'nullable'
+        oct  | gals   | ppu   | total  | dtOccurred         | odo     | station      | veh       || expValid | numErrors | fieldInError   | errorCode
+        '87' | 9.993  | 3.399 | 33.97  | date('09/09/2017') | 45_098  | gasStation() | vehicle() || true     | 0         | null           | null
+        null | 9.993  | 3.399 | 33.97  | date('09/09/2017') | 33_901  | gasStation() | vehicle() || false    | 1         | 'octane'       | 'nullable'
+        ''   | 10.881 | 2.799 | 30.46  | date('09/09/2017') | 101_354 | gasStation() | vehicle() || false    | 1         | 'octane'       | 'blank'
+        '91' | null   | 2.619 | 28.78  | date('09/09/2015') | 113_782 | gasStation() | vehicle() || false    | 1         | 'numGallons'   | 'nullable'
+        '91' | -1.0   | 2.619 | 28.78  | date('09/09/2015') | 113_782 | gasStation() | vehicle() || false    | 1         | 'numGallons'   | 'min.notmet'
+        '93' | 21.908 | null  | 107.17 | date('10/10/2018') | 4_991   | gasStation() | vehicle() || false    | 1         | 'pricePerUnit' | 'nullable'
+        '93' | 9.993  | 5.399 | 53.95  | date('09/09/2020') | 35_168  | null         | vehicle() || false    | 1         | 'gasStation'   | 'nullable'
+        '93' | 9.993  | 5.399 | 53.95  | date('08/09/2020') | 30_068  | gasStation() | null      || false    | 1         | 'vehicle'      | 'nullable'
     }
 
     private GasStation gasStation() {
         new GasStation(name: "Jimbo's One Stop", city: 'Montgomery', state: 'AL', zipCode: 36103)
+    }
+
+    private Vehicle vehicle() {
+        new Vehicle(modelYear: 2006, make: 'Honda', model: 'Insight')
     }
     private Date date(String dateString) {
         new Date().parse('MM/dd/yyyy', dateString)

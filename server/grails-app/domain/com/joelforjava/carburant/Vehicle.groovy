@@ -1,5 +1,8 @@
 package com.joelforjava.carburant
 
+import grails.rest.Resource
+
+@Resource
 class Vehicle {
 
     Integer modelYear

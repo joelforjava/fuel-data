@@ -15,6 +15,10 @@ class UrlMappings {
         }
         "/gas-stations"(resources: "gasStation")
 
+        "/vehicles"(resources: "vehicle") {
+            "/fill-ups"(resources: "fillUp")
+        }
+
         "/"(controller: 'application', action:'index')
         "500"(view: '/error')
         "404"(view: '/notFound')
