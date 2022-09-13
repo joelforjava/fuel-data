@@ -47,7 +47,7 @@ export default {
     }
   },
   created: function () {
-    fetch(`${this.$data.serverURL}/fill-ups`)
+    fetch(`${this.$data.serverURL}/vehicles/${this.$route.params.vehicleId}/fill-ups`)
       .then(response => response.json())
       .then(json => {
         this.fillUps = json

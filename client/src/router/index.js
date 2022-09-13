@@ -4,6 +4,7 @@ import Welcome from '@/components/Welcome'
 import FillUps from '@/components/FillUps'
 import NewFillUp from '@/components/NewFillUp'
 import NewGasStation from '@/components/NewGasStation'
+import Vehicles from '@/components/Vehicles'
 
 Vue.use(Router)
 
@@ -28,6 +29,16 @@ const router = new Router({
       path: '/station/add',
       name: 'Add Gas Station',
       component: NewGasStation
+    },
+    {
+      path: '/vehicles',
+      name: 'Vehicles',
+      component: Vehicles
+    },
+    {
+      path: '/vehicles/:vehicleId/fills',
+      name: 'Vehicle Fill Ups',
+      component: FillUps
     }
   ]
 })
