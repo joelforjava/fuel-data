@@ -85,6 +85,8 @@
             <li v-if="serverInfo.controllers" v-for="controller in serverInfo.controllers" :key="controller.name">
               <a :href="serverURL + '/' + controller.logicalPropertyName">{{controller.name }}</a></li>
           </ul>
+          <h2>Main Entry</h2>
+          <router-link to="Vehicles">Your Vehicle List</router-link>
         </div>
       </section>
     </div>

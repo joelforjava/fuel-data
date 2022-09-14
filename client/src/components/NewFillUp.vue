@@ -103,7 +103,7 @@ export default {
     },
     saveFillUp: function () {
       console.log(this.$data.fillUp)
-      fetch(`${this.$data.serverURL}/fill-ups`, {
+      fetch(`${this.$data.serverURL}/vehicles/${this.$route.params.vehicleId}/fill-ups`, {
         method: 'POST',
         body: JSON.stringify(this.$data.fillUp),
         headers: {
@@ -118,6 +118,7 @@ export default {
     }
   },
   created: function () {
+    // TODO - we should change this to pull from a user's saved stations
     fetch(`${this.$data.serverURL}/gas-stations`)
       .then(response => response.json())
       .then(json => {

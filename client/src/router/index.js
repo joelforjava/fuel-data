@@ -39,6 +39,11 @@ const router = new Router({
       path: '/vehicles/:vehicleId/fills',
       name: 'Vehicle Fill Ups',
       component: FillUps
+    },
+    {
+      path: '/vehicles/:vehicleId/fills/add',
+      name: 'Add Vehicle Fill Up',
+      component: NewFillUp
     }
   ]
 })
