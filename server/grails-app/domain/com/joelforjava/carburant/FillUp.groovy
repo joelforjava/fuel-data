@@ -4,7 +4,7 @@ import grails.rest.Resource
 
 import java.text.SimpleDateFormat
 
-@Resource
+@Resource//(superClass=FillUpController)
 class FillUp {
 
     Date dateCreated

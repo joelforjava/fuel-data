@@ -36,6 +36,10 @@ class FillUpFuncSpec extends Specification {
         this.client = HttpClient.create(baseUrl.toURL())
     }
 
+    void onClose() {
+        this.client.close()
+    }
+
     def 'test retrieving a list of vehicle fill-ups'() {
         given:
         Vehicle.withNewTransaction { status ->
@@ -83,6 +87,7 @@ class FillUpFuncSpec extends Specification {
 
     }
 
+    @Ignore
     def 'test saving a new fill-up'() {
         given: 'A fill up with all the required fields populated'
         Vehicle.withNewTransaction { status ->

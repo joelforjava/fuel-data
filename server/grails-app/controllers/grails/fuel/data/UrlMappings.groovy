@@ -16,6 +16,10 @@ class UrlMappings {
         "/gas-stations"(resources: "gasStation")
 
         "/vehicles"(resources: "vehicle") {
+            // NOTE: You have to use controller here. If you try to use resource,
+            //       you will need to update the @Resource to point to the controller,
+            //       and when you do this, all hell breaks loose and the code no longer compiles
+            //       because of something to do with @Log? Will revisit later.
             "/fill-ups"(resources: "fillUp")
         }
 
