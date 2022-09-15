@@ -67,6 +67,9 @@ export default {
         zipCode: ''
       },
       fillUp: {
+        vehicle: {
+          id: this.$route.params.vehicleId
+        },
         octane: '',
         numGallons: '',
         pricePerUnit: '',
@@ -112,7 +115,7 @@ export default {
       }).then((res) => res.json())
         .then((data) => {
           console.log(data)
-          this.$router.push('/fills')
+          this.$router.push(`/vehicles/${this.$route.params.vehicleId}/fills`)
         })
         .catch((err) => console.error(err))
     }

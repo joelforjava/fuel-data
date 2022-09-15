@@ -87,7 +87,6 @@ class FillUpFuncSpec extends Specification {
 
     }
 
-    @Ignore
     def 'test saving a new fill-up'() {
         given: 'A fill up with all the required fields populated'
         Vehicle.withNewTransaction { status ->
@@ -105,6 +104,11 @@ class FillUpFuncSpec extends Specification {
         Map<String, Object> json = [
                 gasStation: [
                         id: this.gasStation.id
+                ],
+                // I really don't like the idea of having to pass the ID here and in the URL, but I'm tired
+                // and I really don't feel like trying to fixing the Controller to handle it the way I want
+                vehicle: [
+                        id: this.vehicle.id
                 ],
                 dateOccurred: LocalDateTime.now().minus(10, ChronoUnit.DAYS).format(DateTimeFormatter.ISO_DATE_TIME),
                 numGallons: 5,
@@ -126,6 +130,9 @@ class FillUpFuncSpec extends Specification {
         responseBody.id
 
         cleanup:
+        FillUp.withNewTransaction {
+            FillUp.load(responseBody.id).delete()
+        }
         Vehicle.withNewTransaction {
             this.vehicle.delete()
         }
