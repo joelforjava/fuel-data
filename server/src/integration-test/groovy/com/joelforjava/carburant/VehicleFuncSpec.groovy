@@ -27,8 +27,12 @@ class VehicleFuncSpec extends Specification {
 
     def 'test retrieving a list of vehicles'() {
         List<Serializable> ids = []
+        User user = User.withNewTransaction {
+            new User(username: 'test', password: 'extralongpassword').save(failOnError: true)
+        }
         Vehicle.withNewTransaction {
-            Vehicle vehicle = new Vehicle(modelYear: 2005, make: 'Honda', model: 'Insight')
+            Vehicle vehicle = new Vehicle(modelYear: 2005, make: 'Honda', model: 'Insight',
+                    user: user)
             vehicle.save(failOnError: true)
             ids << vehicle.id
         }
@@ -47,6 +51,9 @@ class VehicleFuncSpec extends Specification {
             ids.each {
                 Vehicle.load(it).delete()
             }
+        }
+        User.withNewTransaction {
+            user.delete()
         }
     }
 }

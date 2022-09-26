@@ -2,6 +2,7 @@ package grails.fuel.data
 
 import com.joelforjava.carburant.FillUp
 import com.joelforjava.carburant.GasStation
+import com.joelforjava.carburant.User
 import com.joelforjava.carburant.Vehicle
 
 class BootStrap {
@@ -18,7 +19,8 @@ class BootStrap {
                             totalCost: 28.48, odometerReading: 486.0, gasStation: station )//.save(failOnError: true)
                     // This version works and I have no fucking idea why. Using the first create/save above does not
                     // add the fillup when we call addTo below.
-                    def vehicle = new Vehicle(modelYear: 2011, make: 'Honda', model: 'CR-Z')//.save(failOnError: true)
+                    def user = new User(username: 'cleverusername', password: 'difficultpassword').save(failOnError: true)
+                    def vehicle = new Vehicle(modelYear: 2011, make: 'Honda', model: 'CR-Z', user: user)//.save(failOnError: true)
                     vehicle.addToFillups(fillup)
                     vehicle.save(failOnError: true)
                 }

@@ -6,6 +6,8 @@ class User {
     String password
     Date dateCreated
 
+    static hasMany = [vehicles: Vehicle]
+
     static constraints = {
         username size: 3..150, nullable: false, blank: false, unique: true
         password nullable: false, blank: false, password: true

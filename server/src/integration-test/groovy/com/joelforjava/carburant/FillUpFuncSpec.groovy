@@ -42,8 +42,11 @@ class FillUpFuncSpec extends Specification {
 
     def 'test retrieving a list of vehicle fill-ups'() {
         given:
+        User user = User.withNewTransaction {
+            new User(username: 'test', password: 'extralongpassword').save(failOnError: true)
+        }
         Vehicle.withNewTransaction { status ->
-            this.vehicle = new Vehicle(modelYear: 2005, make: 'Honda', model: 'Insight')
+            this.vehicle = new Vehicle(modelYear: 2005, make: 'Honda', model: 'Insight', user: user)
             this.vehicle.save(failOnError: true)
             status.isCompleted()
         }
@@ -84,13 +87,19 @@ class FillUpFuncSpec extends Specification {
         Vehicle.withNewTransaction {
             this.vehicle.delete()
         }
+        User.withNewTransaction {
+            user.delete()
+        }
 
     }
 
     def 'test saving a new fill-up'() {
         given: 'A fill up with all the required fields populated'
+        User user = User.withNewTransaction {
+            new User(username: 'test', password: 'extralongpassword').save(failOnError: true)
+        }
         Vehicle.withNewTransaction { status ->
-            this.vehicle = new Vehicle(modelYear: 2004, make: 'Honda', model: 'Insight')
+            this.vehicle = new Vehicle(modelYear: 2004, make: 'Honda', model: 'Insight', user: user)
             this.vehicle.save(failOnError: true)
             status.isCompleted()
         }
@@ -138,6 +147,9 @@ class FillUpFuncSpec extends Specification {
         }
         GasStation.withNewTransaction {
             this.gasStation.delete()
+        }
+        User.withNewTransaction {
+            user.delete()
         }
     }
 

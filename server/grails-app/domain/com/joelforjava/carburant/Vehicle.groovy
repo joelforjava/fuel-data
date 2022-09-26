@@ -11,8 +11,7 @@ class Vehicle {
 
     static hasMany = [fillups: FillUp]
 
-    // TODO set up
-    // static belongsTo = [user: User]
+     static belongsTo = [user: User]
 
     static constraints = {
         modelYear nullable: false
