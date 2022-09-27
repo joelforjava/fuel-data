@@ -7,6 +7,7 @@ import io.micronaut.http.HttpRequest
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.client.HttpClient
+import io.micronaut.http.client.exceptions.HttpClientException
 import spock.lang.AutoCleanup
 import spock.lang.Shared
 import spock.lang.Specification
@@ -24,8 +25,24 @@ class GasStationFuncSpec extends Specification {
         this.client = HttpClient.create(baseUrl.toURL())
     }
 
-    def 'test retrieving a global list of gas stations'() {
+    def 'test retrieving a global list of gas stations unauthenticated shows not found'() {
+
+        when:
+        HttpRequest request = HttpRequest.GET('/gas-stations')
+        this.client.toBlocking().exchange(request, Argument.of(List, Map))
+
+        then:
+        HttpClientException e = thrown(HttpClientException)
+        e.response.status == HttpStatus.NOT_FOUND
+
+    }
+
+    def 'test retrieving a global list of gas stations when authenticated'() {
         given:
+        User user = User.withNewTransaction {
+            new User(username: 'gasstation_tester', password: 'easytoguesspassword').save(failOnError: true)
+        }
+
         List<Serializable> ids = []
         GasStation.withNewTransaction {
             GasStation station = new GasStation(name: 'RaceTrac #1812', address: '6420 Nantucket Expressway',
@@ -35,7 +52,12 @@ class GasStationFuncSpec extends Specification {
         }
 
         when:
+        UserCredentials creds = new UserCredentials(username: 'gasstation_tester', password: 'easytoguesspassword')
+        HttpRequest loginRequest = HttpRequest.POST('/api/login', creds)
+        HttpResponse<BearerToken> loginResp = client.toBlocking().exchange(loginRequest, BearerToken)
+
         HttpRequest request = HttpRequest.GET('/gas-stations')
+                .header('Authorization', "Bearer ${loginResp.body().accessToken}")
         HttpResponse<List<Map>> resp = this.client.toBlocking().exchange(request, Argument.of(List, Map))
 
         then:
@@ -46,8 +68,13 @@ class GasStationFuncSpec extends Specification {
         cleanup:
         GasStation.withNewTransaction {
             ids.each {
-                GasStation.load(it).delete()
+                GasStation.load(it).delete(flush: true)
             }
         }
+
+        User.withNewTransaction {
+            user.delete(flush: true)
+        }
+
     }
 }
