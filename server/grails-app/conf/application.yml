@@ -91,12 +91,8 @@ dataSource:
 environments:
     development:
         dataSource:
-            dbCreate: none
-            url: jdbc:mariadb://dev3-db.joelforjava.local:8806/FUEL_DATA
-            username: ${FUEL_DATA_PRD_USR}
-            password: ${FUEL_DATA_PRD_PWD}
-            driverClassName: org.mariadb.jdbc.Driver
-            dialect: org.hibernate.dialect.MariaDB53Dialect
+            dbCreate: create-drop
+            url: jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
     test:
         dataSource:
             dbCreate: update
