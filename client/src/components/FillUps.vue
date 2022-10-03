@@ -47,7 +47,7 @@ export default {
     }
   },
   created: function () {
-    fetch(`${this.$data.serverURL}/vehicles/${this.$route.params.vehicleId}/fill-ups`)
+    fetch(`${this.$data.serverURL}/vehicles/${this.$route.params.vehicleId}/fill-ups`, { headers: { 'Authorization': `Bearer ${this.$store.getters.session}` } })
       .then(response => response.json())
       .then(json => {
         this.fillUps = json

@@ -5,6 +5,8 @@ import FillUps from '@/components/FillUps'
 import NewFillUp from '@/components/NewFillUp'
 import NewGasStation from '@/components/NewGasStation'
 import Vehicles from '@/components/Vehicles'
+import Login from '../components/Login'
+import state from '../state'
 
 Vue.use(Router)
 
@@ -18,12 +20,28 @@ const router = new Router({
     {
       path: '/fills',
       name: 'Fill Ups',
-      component: FillUps
+      component: FillUps,
+      beforeEnter: (to, from, next) => {
+        const session = state.getters.session
+        if (!session) {
+          next({ name: 'Login', query: { from: to.fullPath } })
+        } else {
+          next()
+        }
+      }
     },
     {
       path: '/fills/add',
       name: 'Add Fill Up',
-      component: NewFillUp
+      component: NewFillUp,
+      beforeEnter: (to, from, next) => {
+        const session = state.getters.session
+        if (!session) {
+          next({ name: 'Login', query: { from: to.fullPath } })
+        } else {
+          next()
+        }
+      }
     },
     {
       path: '/station/add',
@@ -33,17 +51,54 @@ const router = new Router({
     {
       path: '/vehicles',
       name: 'Vehicles',
-      component: Vehicles
+      component: Vehicles,
+      beforeEnter: (to, from, next) => {
+        const session = state.getters.session
+        if (!session) {
+          next({ name: 'Login', query: { from: to.fullPath } })
+        } else {
+          next()
+        }
+      }
     },
     {
       path: '/vehicles/:vehicleId/fills',
       name: 'Vehicle Fill Ups',
-      component: FillUps
+      component: FillUps,
+      beforeEnter: (to, from, next) => {
+        const session = state.getters.session
+        if (!session) {
+          next({ name: 'Login', query: { from: to.fullPath } })
+        } else {
+          next()
+        }
+      }
     },
     {
       path: '/vehicles/:vehicleId/fills/add',
       name: 'Add Vehicle Fill Up',
-      component: NewFillUp
+      component: NewFillUp,
+      beforeEnter: (to, from, next) => {
+        const session = state.getters.session
+        if (!session) {
+          next({ name: 'Login', query: { from: to.fullPath } })
+        } else {
+          next()
+        }
+      }
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: Login,
+      beforeEnter: (to, from, next) => {
+        const session = state.getters.session
+        if (!session) {
+          next({ query: { from: to.fullPath } })
+        } else {
+          next({ name: 'Vehicles' })
+        }
+      }
     }
   ]
 })
