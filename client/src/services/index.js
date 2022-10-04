@@ -24,19 +24,9 @@ class BaseService {
     this.baseUrl = url
     console.debug(`Service created with URL: ${url}`)
     this.headers = new Headers()
-    // TODO - this works great the first time, but if you refresh the page, the services lose the token!
-    state.watch((state, getters) => getters.session,
-      (newValue, oldValue) => {
-        if (newValue) {
-          this.addHeader('Authorization', `Bearer ${newValue}`)
-        } else {
-          this.removeHeader('Authorization')
-        }
-      })
   }
 
   addHeader (name, value) {
-    console.info(`Setting ${name} to ${value}`)
     this.headers.set(name, value)
   }
 
@@ -117,6 +107,21 @@ export class LoginService extends BaseService {
 }
 
 export class ApiService extends BaseService {
+  constructor (url) {
+    super(url)
+    // I feel like this isn't the best place for this, but I'll leave it until I have more time to research
+    if (state.getters.session) {
+      this.addHeader('Authorization', `Bearer ${state.getters.session}`)
+    }
+    state.watch((state, getters) => getters.session,
+      (newValue, oldValue) => {
+        if (newValue) {
+          this.addHeader('Authorization', `Bearer ${newValue}`)
+        } else {
+          this.removeHeader('Authorization')
+        }
+      })
+  }
   getVehicles () {
     // TODO - we currently just access vehicles with no regard of the user
     //      - at some point, we may have to change that if we decide this app is thrilling enough
