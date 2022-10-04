@@ -10,7 +10,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import './assets/css/grails.css'
 import './assets/css/main.css'
-import {LoginService} from './services'
+import {ApiService, LoginService} from './services'
 
 Vue.config.productionTip = false
 
@@ -22,6 +22,7 @@ new Vue({
   el: '#app',
   router,
   store: state,
+  apiService: new ApiService(process.env.SERVER_URL),
   auth: new LoginService(process.env.SERVER_URL),
   components: { App },
   template: '<App/>'

@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
 import Vue from 'vue'
+import state from '../state'
 
 Vue.mixin({
   beforeCreate () {
@@ -10,6 +11,11 @@ Vue.mixin({
     } else if (options.parent && options.parent.$auth) {
       this.$auth = options.parent.$auth
     }
+    if (options.apiService) {
+      this.$apiService = options.apiService
+    } else if (options.parent && options.parent.$apiService) {
+      this.$apiService = options.parent.$apiService
+    }
   }
 })
 
@@ -18,9 +24,19 @@ class BaseService {
     this.baseUrl = url
     console.debug(`Service created with URL: ${url}`)
     this.headers = new Headers()
+    // TODO - this works great the first time, but if you refresh the page, the services lose the token!
+    state.watch((state, getters) => getters.session,
+      (newValue, oldValue) => {
+        if (newValue) {
+          this.addHeader('Authorization', `Bearer ${newValue}`)
+        } else {
+          this.removeHeader('Authorization')
+        }
+      })
   }
 
   addHeader (name, value) {
+    console.info(`Setting ${name} to ${value}`)
     this.headers.set(name, value)
   }
 
@@ -35,7 +51,8 @@ class BaseService {
     return new Promise((resolve, reject) => {
       fetch(url, {
         method: method,
-        body: data
+        body: data,
+        headers: this.headers
       }).then((res) => {
         if (res.status === 200) {
           resolve(res) // TODO - is there a way to dynamically replace res.text() with res.json()?? Could just resolve(res).
@@ -96,5 +113,16 @@ export class LoginService extends BaseService {
 
   logout () {
     return this.post('/api/logout')
+  }
+}
+
+export class ApiService extends BaseService {
+  getVehicles () {
+    // TODO - we currently just access vehicles with no regard of the user
+    //      - at some point, we may have to change that if we decide this app is thrilling enough
+    return this.get('/vehicles')
+  }
+  getFillUps (vehicleId) {
+    return this.get(`/vehicles/${vehicleId}/fill-ups`)
   }
 }

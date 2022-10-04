@@ -31,7 +31,7 @@ export default {
     }
   },
   created: function () {
-    fetch(`${this.$data.serverURL}/vehicles`, { headers: { 'Authorization': `Bearer ${this.$store.getters.session}` } })
+    this.$apiService.getVehicles()
       .then(response => response.json())
       .then(json => {
         this.vehicles = json
