@@ -46,8 +46,8 @@ export default {
         .then((data) => {
           console.log(data)
           if (data) {
-            this.success = true
             if (data.access_token) {
+              this.success = true
               console.log('Setting session')
               this.$store.commit('SET_SESSION', data.access_token)
               this.$router.push(this.$route.query.from || '/vehicles')

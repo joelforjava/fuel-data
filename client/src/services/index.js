@@ -109,6 +109,8 @@ export class LoginService extends BaseService {
 export class ApiService extends BaseService {
   constructor (url) {
     super(url)
+    this.addHeader('Content-Type', 'application/json')
+    this.addHeader('Accept', 'application/json')
     // I feel like this isn't the best place for this, but I'll leave it until I have more time to research
     if (state.getters.session) {
       this.addHeader('Authorization', `Bearer ${state.getters.session}`)
@@ -129,5 +131,14 @@ export class ApiService extends BaseService {
   }
   getFillUps (vehicleId) {
     return this.get(`/vehicles/${vehicleId}/fill-ups`)
+  }
+  getGasStations () {
+    return this.get('/gas-stations')
+  }
+  saveGasStation (data) {
+    return this.post('/gas-stations', JSON.stringify(data))
+  }
+  saveFillUp (vehicleId, data) {
+    return this.post(`/vehicles/${vehicleId}/fill-ups`, JSON.stringify(data))
   }
 }

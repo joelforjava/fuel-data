@@ -59,13 +59,8 @@ export default {
     saveGasStation: function () {
       console.log(this.$data.gasStation)
       console.log(JSON.stringify(this.$data.gasStation))
-      fetch(`${this.$data.serverURL}/gas-stations`, {
-        method: 'POST',
-        body: JSON.stringify(this.$data.gasStation),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }).then((res) => res.json())
+      this.$apiService.saveGasStation(this.$data.gasStation)
+        .then((res) => res.json())
         .then((data) => {
           console.log(data)
           this.gasStation = {
@@ -80,7 +75,7 @@ export default {
     }
   },
   created: function () {
-    fetch(`${this.$data.serverURL}/gas-stations`)
+    this.$apiService.getGasStations()
       .then(response => response.json())
       .then(json => {
         console.log(json)

@@ -88,13 +88,8 @@ export default {
     saveGasStation: function () {
       console.log(this.$data.gasStation)
       console.log(JSON.stringify(this.$data.gasStation))
-      fetch(`${this.$data.serverURL}/gas-stations`, {
-        method: 'POST',
-        body: JSON.stringify(this.$data.gasStation),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }).then((res) => res.json())
+      this.$apiService.saveGasStation(this.$data.gasStation)
+        .then((res) => res.json())
         .then((data) => {
           console.log(data)
           if (data.id) {
@@ -106,13 +101,8 @@ export default {
     },
     saveFillUp: function () {
       console.log(this.$data.fillUp)
-      fetch(`${this.$data.serverURL}/vehicles/${this.$route.params.vehicleId}/fill-ups`, {
-        method: 'POST',
-        body: JSON.stringify(this.$data.fillUp),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }).then((res) => res.json())
+      this.$apiService.saveFillUp(this.$route.params.vehicleId, this.$data.fillUp)
+        .then((res) => res.json())
         .then((data) => {
           console.log(data)
           this.$router.push(`/vehicles/${this.$route.params.vehicleId}/fills`)
@@ -121,8 +111,9 @@ export default {
     }
   },
   created: function () {
-    // TODO - we should change this to pull from a user's saved stations
-    fetch(`${this.$data.serverURL}/gas-stations`)
+    // TODO - we should change this to pull from a user's saved stations,
+    //  but the API needs to be updated to behave that way.
+    this.$apiService.getGasStations()
       .then(response => response.json())
       .then(json => {
         console.log(json)
